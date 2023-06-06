@@ -35,6 +35,8 @@ void	sendBitMessageToServer(pid_t serverPid, const char *message)
 	int		len;
 
 	len = strlen(message);
+	if (len >= 1000)
+		exit(ft_printf("Message too long (max. 1000 characters)\n"));
 	i = 0;
 	while (i <= len)
 	{

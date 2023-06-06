@@ -14,7 +14,7 @@ void	*ft_memset(void *b, int c, size_t len)
 
 void	bitToMessage(int signal, siginfo_t *sa, void *whatever)
 {
-	static char	message[MESSAGE_SIZE];
+	static unsigned char	message[MESSAGE_SIZE];
 	static int	bitIndex = 0;
 	static int	charIndex = 0;
 
@@ -26,8 +26,8 @@ void	bitToMessage(int signal, siginfo_t *sa, void *whatever)
 	{
 		if (message[charIndex] == '\0')
 		{
-			ft_printf("Received message from client nb: %s\n", message);
-			ft_printf("Client pid : %d\n", sa->si_pid);
+			ft_printf("Received message from client with PID #%d : %s\n",
+				sa->si_pid, message);
 			ft_memset(message, 0, sizeof(message));
 			kill(sa->si_pid, SIGUSR1);
 			charIndex = 0;
@@ -44,7 +44,7 @@ int	main(void)
 	struct sigaction	sa;
 
 	pid = getpid();
-	ft_printf("Server pid : %d\n", pid);
+	ft_printf("Server PID : %d\n", pid);
 	sa.sa_sigaction = bitToMessage;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;

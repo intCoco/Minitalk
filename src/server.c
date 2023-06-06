@@ -2,11 +2,11 @@
 
 #define MESSAGE_SIZE 1000
 
-/*void	bitToMessage(int signal)
+void	bitToMessage(int signal)
 {
-	static char	message[MESSAGE_SIZE];
-	static int	bitIndex = 0;
-	static int	charIndex = 0;
+	static unsigned char	message[MESSAGE_SIZE];
+	static int				bitIndex = 0;
+	static int				charIndex = 0;
 
 	if (signal == SIGUSR1)
 		message[charIndex] |= (1 << bitIndex);
@@ -14,26 +14,13 @@
 	if (bitIndex >= 8)
 	{
 		if (message[charIndex] == '\0')
+		{
 			ft_printf("Received message from client: %s\n", message);
-		charIndex++;
-		bitIndex = 0;
-	}
-}*/
-
-void	bitToMessage(int signal)
-{
-	static char	ch;
-	static int	bitIndex = 0;
-
-	if (signal == SIGUSR1)
-		ch |= (1 << bitIndex);
-	bitIndex++;
-	if (bitIndex >= 8)
-	{
-		ft_printf("%c", ch);
-		if (ch == 0)
-			ft_printf("\n");
-		ch = 0;
+			ft_memset(message, 0, sizeof(message));
+			charIndex = 0;
+		}
+		else
+			charIndex++;
 		bitIndex = 0;
 	}
 }

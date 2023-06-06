@@ -35,6 +35,8 @@ void	sendBitMessageToServer(pid_t serverPid, const char *message)
 	int		len;
 
 	len = strlen(message);
+	if (len >= 1000)
+		exit(ft_printf("Message too long (max. 1000 characters)\n"));
 	i = 0;
 	while (i <= len)
 	{
@@ -46,7 +48,7 @@ void	sendBitMessageToServer(pid_t serverPid, const char *message)
 				kill(serverPid, SIGUSR1);
 			else
 				kill(serverPid, SIGUSR2);
-			usleep(500);
+			usleep(100);
 			j++;
 		}
 		i++;
@@ -57,12 +59,13 @@ void	printReceivedMessage(int sig)
 {
 	if (sig == SIGUSR1)
 	{
-		ft_printf("Message Received");
+		ft_printf("Message Received\n");
+		system("leaks client_bonus");
 		exit(0);
 	}
 	else if (sig == SIGUSR2)
 	{
-		ft_printf("Error");
+		ft_printf("Error\n");
 		exit(1);
 	}
 }
@@ -71,13 +74,12 @@ int	main(int argc, char **argv)
 {
 	int	pid;
 
+	signal(SIGUSR1, printReceivedMessage);
 	if (argc == 3)
 	{
 		pid = ft_atoi(argv[1]);
 		sendBitMessageToServer(pid, argv[2]);
 	}
-	signal(SIGUSR1, printReceivedMessage);
-	while (1)
-		sleep(1);
+	usleep(100);
 	return (0);
 }
