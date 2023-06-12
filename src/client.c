@@ -27,28 +27,28 @@ static int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void	sendBitMessageToServer(pid_t serverPid, const char *message)
+void	sendBitMessageToServer(pid_t serverPid, unsigned char *message)
 {
 	int		i;
 	char	ch;
 	int		j;
 	int		len;
 
-	len = strlen(message);
-	if (len >= 1000)
-		exit(ft_printf("Message too long (max. 1000 characters)\n"));
+	len = strlen((const char *)message);
+	if (len >= 10000)
+		exit(ft_printf("Message too long (%d/10000 characters)\n", len));
 	i = 0;
 	while (i <= len)
 	{
 		ch = message[i];
 		j = 0;
-		while (j < 8)
+		while (j < 16)
 		{
 			if (((ch >> j) & 1) == 1)
 				kill(serverPid, SIGUSR1);
 			else
 				kill(serverPid, SIGUSR2);
-			usleep(500);
+			usleep(100);
 			j++;
 		}
 		i++;
@@ -62,7 +62,7 @@ int	main(int argc, char **argv)
 	if (argc == 3)
 	{
 		pid = ft_atoi(argv[1]);
-		sendBitMessageToServer(pid, argv[2]);
+		sendBitMessageToServer(pid, (unsigned char *)argv[2]);
 	}
 	return (0);
 }

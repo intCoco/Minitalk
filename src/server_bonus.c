@@ -1,6 +1,6 @@
 #include "../include/minitalk_bonus.h"
 
-#define MESSAGE_SIZE 1000
+#define MESSAGE_SIZE 10000
 
 void	*ft_memset(void *b, int c, size_t len)
 {
@@ -22,11 +22,11 @@ void	bitToMessage(int signal, siginfo_t *sa, void *whatever)
 	if (signal == SIGUSR1)
 		message[charIndex] |= (1 << bitIndex);
 	bitIndex++;
-	if (bitIndex >= 8)
+	if (bitIndex >= 16)
 	{
 		if (message[charIndex] == '\0')
 		{
-			ft_printf("Received message from client with PID #%d : %s\n",
+			ft_printf("Received message from client with PID #%d : \"%s\"\n",
 				sa->si_pid, message);
 			ft_memset(message, 0, sizeof(message));
 			kill(sa->si_pid, SIGUSR1);
@@ -40,11 +40,9 @@ void	bitToMessage(int signal, siginfo_t *sa, void *whatever)
 
 int	main(void)
 {
-	pid_t				pid;
 	struct sigaction	sa;
 
-	pid = getpid();
-	ft_printf("Server PID : %d\n", pid);
+	ft_printf("Server PID : %d\n", getpid());
 	sa.sa_sigaction = bitToMessage;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;

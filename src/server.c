@@ -1,6 +1,16 @@
 #include "../include/minitalk.h"
 
-#define MESSAGE_SIZE 1000
+#define MESSAGE_SIZE 10000
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < len)
+		((char *)b)[i] = (unsigned char)c;
+	return (b);
+}
 
 void	bitToMessage(int signal)
 {
@@ -11,7 +21,7 @@ void	bitToMessage(int signal)
 	if (signal == SIGUSR1)
 		message[charIndex] |= (1 << bitIndex);
 	bitIndex++;
-	if (bitIndex >= 8)
+	if (bitIndex >= 16)
 	{
 		if (message[charIndex] == '\0')
 		{
@@ -25,18 +35,9 @@ void	bitToMessage(int signal)
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	pid_t	pid;
-
-	(void)argv;
-	if (argc != 1)
-	{
-		ft_printf("Error\n");
-		return (1);
-	}
-	pid = getpid();
-	ft_printf("%d\n", pid);
+	ft_printf("Server PID : %d\n", getpid());
 	signal(SIGUSR1, bitToMessage);
 	signal(SIGUSR2, bitToMessage);
 	while (1)
