@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 17:36:51 by chuchard          #+#    #+#             */
-/*   Updated: 2023/06/12 19:24:08 by chuchard         ###   ########.fr       */
+/*   Created: 2022/11/11 20:47:38 by chuchard          #+#    #+#             */
+/*   Updated: 2022/11/11 21:45:01 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <unistd.h>
-
-#endif
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	if (lst)
+	{
+		new->next = *lst;
+		lst[0] = new;
+	}
+}

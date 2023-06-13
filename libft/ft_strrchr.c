@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 17:36:51 by chuchard          #+#    #+#             */
-/*   Updated: 2023/06/12 19:24:08 by chuchard         ###   ########.fr       */
+/*   Created: 2022/11/09 11:11:07 by chuchard          #+#    #+#             */
+/*   Updated: 2022/11/09 12:54:37 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <unistd.h>
+char	*ft_strrchr(const char *str, int c)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (str[i])
+		i++;
+	while (i > 0 && str[i] != (char) c)
+		i--;
+	if (str[i] == (char) c)
+		return ((char *)str + i);
+	return (NULL);
+}

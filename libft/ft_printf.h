@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 17:36:51 by chuchard          #+#    #+#             */
-/*   Updated: 2023/06/12 19:24:08 by chuchard         ###   ########.fr       */
+/*   Created: 2022/11/12 20:17:19 by chuchard          #+#    #+#             */
+/*   Updated: 2022/11/14 13:13:49 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include "../libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
+# include <stdarg.h>
 # include <unistd.h>
+
+# define ULL unsigned long long
+# define HEXA_LOW "0123456789abcdef"
+# define HEXA_UP "0123456789ABCDEF"
+# define DEC "0123456789"
+
+int	ft_printf(const char *format, ...);
+int	ft_putchar_pf(char c);
+int	ft_putstr_pf(char *str);
+int	ft_putnbr_pf(int nb);
 
 #endif

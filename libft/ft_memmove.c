@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 17:36:51 by chuchard          #+#    #+#             */
-/*   Updated: 2023/06/12 19:24:08 by chuchard         ###   ########.fr       */
+/*   Created: 2022/11/08 10:46:35 by chuchard          #+#    #+#             */
+/*   Updated: 2022/11/09 12:50:44 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <unistd.h>
+void	*ft_memmove(void *dest, const void *src, size_t len)
+{
+	size_t	i;
 
-#endif
+	i = -1;
+	if (!dest && !src)
+		return (NULL);
+	if (dest > src)
+		while (len-- > 0)
+			((char *)dest)[len] = ((char *)src)[len];
+	else
+		while (++i < len)
+			((char *)dest)[i] = ((char *)src)[i];
+	return (dest);
+}

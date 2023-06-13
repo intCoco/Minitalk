@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 17:36:51 by chuchard          #+#    #+#             */
-/*   Updated: 2023/06/12 19:24:08 by chuchard         ###   ########.fr       */
+/*   Created: 2022/07/26 10:57:02 by chuchard          #+#    #+#             */
+/*   Updated: 2022/11/12 15:45:47 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <unistd.h>
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*s3;
+	int		i;
+	int		j;
 
-#endif
+	if (!s1 || !s2)
+		return (NULL);
+	i = 0;
+	j = 0;
+	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!s3)
+		return (NULL);
+	while (s1[i])
+		s3[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		s3[j++] = s2[i++];
+	s3[j] = '\0';
+	return (s3);
+}

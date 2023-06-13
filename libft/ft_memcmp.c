@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 17:36:51 by chuchard          #+#    #+#             */
-/*   Updated: 2023/06/12 19:24:08 by chuchard         ###   ########.fr       */
+/*   Created: 2022/11/09 12:26:50 by chuchard          #+#    #+#             */
+/*   Updated: 2022/11/09 12:52:42 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <unistd.h>
+int	ft_memcmp(const void *p1, const void *p2, size_t l)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	if (l <= 0)
+		return (0);
+	while (((unsigned char *)p1)[i] == ((unsigned char *)p2)[i] && i < l - 1)
+		i++;
+	return (((unsigned char *)p1)[i] - ((unsigned char *)p2)[i]);
+}

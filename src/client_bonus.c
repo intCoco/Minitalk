@@ -1,6 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/12 17:36:55 by chuchard          #+#    #+#             */
+/*   Updated: 2023/06/13 18:07:45 by chuchard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minitalk_bonus.h"
 
-static int	ft_atoi(const char *str)
+int	g_var;
+
+static int	ft_mt_atoi(const char *str)
 {
 	int					i;
 	int					sign;
@@ -29,55 +43,62 @@ static int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void	sendBitMessageToServer(pid_t serverPid, unsigned char *message)
+void	sendbitmessagetoserver(pid_t server_pid, unsigned char *message)
 {
 	int		i;
-	char	ch;
 	int		j;
 	int		len;
 
-	len = strlen((const char *)message);
-	if (len >= 10000)
-		exit(ft_printf("Message too long (%d/10000 characters)\n", len));
-	i = 0;
-	while (i <= len)
+	len = ft_strlen((const char *)message);
+	i = -1;
+	while (++i <= len)
 	{
-		ch = message[i];
-		j = 0;
-		while (j < 16)
+		j = -1;
+		while (++j < 16)
 		{
-			if (((ch >> j) & 1) == 1)
-				kill(serverPid, SIGUSR1);
+			if (((message[i] >> j) & 1) == 1)
+			{
+				if (kill(server_pid, SIGUSR1) < 0)
+					exit(ft_printf("ERROR ARGUMENT"));
+			}
 			else
-				kill(serverPid, SIGUSR2);
-			usleep(100);
-			j++;
+			{
+				if (kill(server_pid, SIGUSR2) < 0)
+					exit(ft_printf("ERROR ARGUMENT"));
+			}
+			usleep(50);
 		}
-		i++;
+		while (g_var != 1)
+			usleep(50);
+		g_var = 0;
 	}
 }
 
-void	printReceivedMessage(int sig)
+void	printreceivedmessage(int sig)
 {
 	if (sig == SIGUSR1)
 	{
 		ft_printf("Message Received\n");
 		exit(0);
 	}
+	if (sig == SIGUSR2)
+		g_var = 1;
 }
 
 int	main(int argc, char **argv)
 {
 	int	pid;
 
-	signal(SIGUSR1, printReceivedMessage);
+	signal(SIGUSR1, printreceivedmessage);
+	signal(SIGUSR2, printreceivedmessage);
 	if (argc == 3)
 	{
-		pid = ft_atoi(argv[1]);
+		pid = ft_mt_atoi(argv[1]);
 		if (pid <= 0)
 			return (ft_printf("ERROR ARGUMENT"));
-		sendBitMessageToServer(pid, (unsigned char *)argv[2]);
+		sendbitmessagetoserver(pid, (unsigned char *)argv[2]);
 	}
-	usleep(1000);
-	return (ft_printf("ERROR ARGUMENT"));
+	else
+		return (ft_printf("ERROR ARGUMENT"));
+	return (0);
 }

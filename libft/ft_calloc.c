@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 17:36:51 by chuchard          #+#    #+#             */
-/*   Updated: 2023/06/12 19:24:08 by chuchard         ###   ########.fr       */
+/*   Created: 2022/11/09 15:52:06 by chuchard          #+#    #+#             */
+/*   Updated: 2022/11/13 16:40:00 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include "../libft/libft.h"
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <unistd.h>
+void	*ft_calloc(size_t c, size_t l)
+{
+	char	*s;
+	size_t	i;
 
-#endif
+	s = (void *)malloc(l * c);
+	if (!s)
+		return (NULL);
+	if (l > SIZE_MAX / c)
+		return (NULL);
+	i = -1;
+	while (++i < c * l)
+		*(unsigned char *)(s + i) = 0;
+	return (s);
+}
